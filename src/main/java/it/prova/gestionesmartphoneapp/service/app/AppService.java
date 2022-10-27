@@ -17,4 +17,6 @@ public interface AppService {
 	public void inserisciNuovo(App appInstance) throws Exception;
 
 	public void rimuovi(Long idApp) throws Exception;
+	
+	public void rimuoviAppDaSmartphoneDissociando(Long idApp) throws Exception;
 }

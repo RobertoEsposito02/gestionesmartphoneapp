@@ -49,4 +49,9 @@ public class AppDAOImpl implements AppDAO{
 		this.entityManager = entityManager;
 	}
 
+	@Override
+	public void disassociaAppESmartphone(Long idApp) {
+		entityManager.createNativeQuery("delete from smartphone_app where app_id=?1").setParameter(1, idApp).executeUpdate();
+	}
+
 }

@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 import it.prova.gestionesmartphoneapp.dao.EntityManagerUtil;
@@ -35,7 +36,7 @@ public class MyTest {
 			
 			testAggiungiAppASmartphone(smartphoneService, appService);
 			
-			//testRimuoviAppDaSmartphone(smartphoneService, appService);
+			testRimuoviAppDaSmartphone(smartphoneService, appService);
 			
 			testRimozioneSmartphoneConDueApp(smartphoneService, appService);
 			
@@ -95,9 +96,9 @@ public class MyTest {
 		
 		String nuovaVersione = "1.0.1";
 		LocalDateTime upDateTime = nuovaAppDaInserire.getUpdateDateTime();
-		//String localdateUpdate = upDateTime.format(null);
-		//Date nuovaDate = new SimpleDateFormat("yyyy/MM/dd").parse(localdateUpdate);
-		//nuovaAppDaInserire.setDataUltimoAggiornamento(nuovaDate);
+		Instant instant = nuovaAppDaInserire.getUpdateDateTime().toInstant(ZoneOffset.UTC);
+		Date nuovaDate = Date.from(instant);
+		nuovaAppDaInserire.setDataUltimoAggiornamento(nuovaDate);
 		nuovaAppDaInserire.setVersione(nuovaVersione);
 		nuovaAppDaInserire.setUpdateDateTime(upDateTime);
 		appServiceInstance.aggiorna(nuovaAppDaInserire);
@@ -145,7 +146,8 @@ public class MyTest {
 		
 		smartphoneServiceInstance.aggiungiApp(nuovaoSmartphone, nuovaAppDaInserire);
 		
-		smartphoneServiceInstance.rimuoviApp(nuovaoSmartphone, nuovaAppDaInserire);
+		App appReloadeApp = appServiceInstance.caricaSingoloElemento(nuovaAppDaInserire.getId());
+		appServiceInstance.rimuoviAppDaSmartphoneDissociando(appReloadeApp.getId());
 		
 		
 		System.out.println("---------------testRimuoviAppDaSmartphone PASSED-----------");

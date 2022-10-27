@@ -112,4 +112,25 @@ public class AppServiceImpl implements AppService {
 		}
 	}
 
+	@Override
+	public void rimuoviAppDaSmartphoneDissociando(Long idApp) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+
+			appDAO.setEntityManager(entityManager);
+
+			appDAO.disassociaAppESmartphone(idApp);
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+	}
+
 }
