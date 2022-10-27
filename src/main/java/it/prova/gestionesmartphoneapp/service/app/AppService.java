@@ -9,4 +9,12 @@ public interface AppService {
 	public void setAppDAO(AppDAO appDAO);
 	
 	public List<App> listAll() throws Exception;
+	
+	public App caricaSingoloElemento(Long id) throws Exception;
+	
+	public void aggiorna(App appInstance) throws Exception;
+
+	public void inserisciNuovo(App appInstance) throws Exception;
+
+	public void rimuovi(Long idApp) throws Exception;
 }

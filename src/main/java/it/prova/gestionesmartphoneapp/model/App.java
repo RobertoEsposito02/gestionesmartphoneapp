@@ -43,10 +43,11 @@ public class App {
 	public App() {
 	}
 
-	public App(String nome, Date datainstallazione, Date dataultimoaggiornamento) {
+	public App(String nome, Date datainstallazione, Date dataultimoaggiornamento, String versione) {
 		this.nome = nome;
 		this.dataInstallazione = datainstallazione;
 		this.dataUltimoAggiornamento = dataultimoaggiornamento;
+		this.versione = versione;
 	}
 
 	public Long getId() {

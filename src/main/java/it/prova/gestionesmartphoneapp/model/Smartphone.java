@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,7 +40,7 @@ public class Smartphone {
 	@UpdateTimestamp
 	private LocalDateTime updateDateTime;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinTable(name = "smartphone_app", joinColumns = @JoinColumn(name = "smartphone_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "app_id", referencedColumnName = "ID"))
 	private Set<App> apps = new HashSet<>();
 
@@ -115,6 +116,16 @@ public class Smartphone {
 
 	public void setApps(Set<App> apps) {
 		this.apps = apps;
+	}
+	
+	public void addToApp(App genereInstance) {
+		this.apps.add(genereInstance);
+		genereInstance.getSmartphones().add(this);
+	}
+
+	public void removeFromApp(App genereInstance) {
+		this.apps.remove(genereInstance);
+		genereInstance.getSmartphones().remove(this);
 	}
 
 }

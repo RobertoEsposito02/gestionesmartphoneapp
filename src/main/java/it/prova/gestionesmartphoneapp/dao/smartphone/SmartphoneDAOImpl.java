@@ -4,44 +4,50 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import it.prova.gestionesmartphoneapp.model.App;
 import it.prova.gestionesmartphoneapp.model.Smartphone;
 
 public class SmartphoneDAOImpl implements SmartphoneDAO{
 
+	private EntityManager entityManager;
+	
 	@Override
 	public List<Smartphone> list() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return entityManager.createQuery("from Smartphone", Smartphone.class).getResultList();
 	}
 
 	@Override
 	public Smartphone get(Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return entityManager.find(Smartphone.class, id);
 	}
 
 	@Override
-	public void update(Smartphone o) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void update(Smartphone input) throws Exception {
+		if (input == null) {
+			throw new Exception("Problema valore in input");
+		}
+		input = entityManager.merge(input);
 	}
 
 	@Override
-	public void insert(Smartphone o) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void insert(Smartphone input) throws Exception {
+		if (input == null) {
+			throw new Exception("Problema valore in input");
+		}
+		entityManager.persist(input);
 	}
 
 	@Override
-	public void delete(Smartphone o) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void delete(Smartphone input) throws Exception {
+		if (input == null) {
+			throw new Exception("Problema valore in input");
+		}
+		entityManager.remove(entityManager.merge(input));
 	}
 
 	@Override
 	public void setEntityManager(EntityManager entityManager) {
-		// TODO Auto-generated method stub
-		
+		this.entityManager = entityManager;
 	}
 
 }
